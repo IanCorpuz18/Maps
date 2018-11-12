@@ -12,7 +12,19 @@ import {
 } from 'react-native';
 import MapView from 'react-native-maps';
 import { explores } from '../../contentImages';
+import Trips from './trips';
 class TripScreen extends Component{
+  pickLocation = event =>  {
+    const coords = event.nativeEvent.coordinate;
+    this.setState(prevState => {
+      return{
+        focusedLocation: {
+        ...prevState.focusedLocation,
+        latitude: coords.latitude,
+        longitude: coords.longitude
+      }};
+    })
+  };
     static navigationOptions = {
         header:null}
 
@@ -35,96 +47,19 @@ class TripScreen extends Component{
         <Text style={{ fontSize: 40, color: '#2f4f4f', marginBottom:15, fontWeight:'bold' }}> TRIP </Text>
      
        <View >
-       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
-       <View style={styles.subCategories}>
-               <View>
-                 <View style={{ height: 100 }}>
-                   <Image source={{
-             uri: this.state.ExploreItems[0].img}} 
-             style={{
-                     flex: 1,
-                     width: null,
-                     height: null,
-                     resizeMode: 'stretch'
-                   }} />
-                   <Text style={{color:'black', fontSize:17, fontWeight:'normal'}}>{this.state.ExploreItems[0].name}</Text>
-                </View>
-               </View>
-       </View>         
-     
-       <View style={styles.subCategories}>
-               <View>
-                 <View style={{ height: 100 }}>
-                   <Image source={{
-             uri: this.state.ExploreItems[1].img}} 
-             style={{
-                     flex: 1,
-                     width: null,
-                     height: null,
-                     resizeMode: 'stretch'
-                   }} />
-                   <Text style={{color:'black', fontSize:17, fontWeight:'normal'}}>{this.state.ExploreItems[1].name}</Text>
-                 </View>
-                </View>
-         </View>
-
-         <View style={styles.subCategories}>
-               <View>
-                 <View style={{ height: 100 }}>
-                   <Image source={{
-             uri: this.state.ExploreItems[2].img}} 
-             style={{
-                     flex: 1,
-                     width: null,
-                     height: null,
-                     resizeMode: 'stretch'
-                   }} />
-                   <Text style={{color:'black', fontSize:17, fontWeight:'normal'}}>{this.state.ExploreItems[2].name}</Text>
-                 </View>
-                </View>
-         </View> 
-         <View style={styles.subCategories}>
-               <View>
-                 <View style={{ height: 100 }}>
-                   <Image source={{
-             uri: this.state.ExploreItems[3].img}} 
-             style={{
-                     flex: 1,
-                     width: null,
-                     height: null,
-                     resizeMode: 'stretch'
-                   }} />
-                   <Text style={{color:'black', fontSize:17, fontWeight:'normal'}}>{this.state.ExploreItems[3].name}</Text>
-                 </View>
-                </View>
-         </View>
-         <View style={styles.subCategories}>
-               <View>
-                 <View style={{ height: 100 }}>
-                   <Image source={{
-             uri: this.state.ExploreItems[4].img}} 
-             style={{
-                     flex: 1,
-                     width: null,
-                     height: null,
-                     resizeMode: 'stretch'
-                   }} />
-                   <Text style={{color:'black', fontSize:17, fontWeight:'normal'}}>{this.state.ExploreItems[4].name}</Text>
-                
-                 </View>
-                
-                </View>
-         </View>
-
-       </ScrollView>  
+     <Trips/>
        </View>
        <View>
                    <MapView  
+                   onPress={this.pickLocation}
                    initialRegion={this.state.focusedLocation}
+                   region={this.state.focusedLocation}
                    style={styles.map}
 
                    />
                  </View>
+                 
+                 <Button title="locate me"/>
        </View>
     );
   }
